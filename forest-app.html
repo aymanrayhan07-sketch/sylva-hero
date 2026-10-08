@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sylva — Into the Living World | Ecological Sanctuary</title>
+  <meta name="description" content="Restoring wild places through patient design, native planting, and a deeper kind of stewardship." />
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            moss: {
+              950: '#070b09',
+              900: '#0b120e',
+              850: '#101a14',
+              800: '#16231b',
+              750: '#1c2c23',
+              700: '#24372c',
+              600: '#2f483a',
+              500: '#3d5c4b',
+              400: '#527c65',
+              300: '#75a68c',
+              200: '#a3c9b4',
+              100: '#d1e5db',
+              50: '#eef6f2',
+            },
+            ivory: '#eef2e6',
+            accent: '#5eead4',
+            emeraldGlow: '#4ade80',
+          },
+          fontFamily: {
+            sans: ['Lexend', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Local and fallback Google font -->
+  <style>
+    @font-face {
+      font-family: 'Lexend';
+      src: url('/landing-pages/inner-green-assets/lexend-latin.woff2') format('woff2'),
+           url('https://fonts.gstatic.com/s/lexend/v19/jl0577msNyFA-ep24a8776yX9uUa2X4.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    body {
+      font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: #0b120e;
+      color: #f1f5f2;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Reference background radial lighting */
+    .hero-light-ground {
+      background:
+        radial-gradient(75% 65% at 50% 120%, rgba(215, 230, 202, 0.16) 0%, rgba(130, 155, 120, 0.05) 50%, transparent 80%),
+        radial-gradient(60% 45% at 20% 75%, rgba(100, 140, 95, 0.12) 0%, transparent 70%),
+        radial-gradient(55% 50% at 85% 20%, rgba(45, 65, 50, 0.25) 0%, transparent 70%),
+        #0b120e;
+    }
+
+    /* Ambient glass panels */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(28, 44, 35, 0.65) 0%, rgba(18, 28, 22, 0.75) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-card-light {
+      background: #f2f4ec;
+      color: #1a231c;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .glass-dock {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 40%, rgba(20, 30, 24, 0.78) 100%);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 12px 32px rgba(6, 10, 8, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    }
+
+    .dock-pill {
+      transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .dock-pill:hover {
+      background-color: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .dock-pill.active {
+      background-color: #eef2e6 !important;
+      color: #141c16 !important;
+      font-weight: 500;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Thin vertical column guide lines matching the reference */
+    .vertical-guide {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.04) 15%, rgba(255, 255, 255, 0.04) 85%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* View transition styles */
+    .view-page {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: none;
+    }
+
+    .view-page.active-view {
+      opacity: 1;
+      transform: translateY(0);
+      display: block;
+    }
+
+    /* Liquid metal sheen button */
+    .liquid-btn {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 48%, rgba(8, 12, 10, 0.5) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .liquid-btn:hover {
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .liquid-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .liquid-btn:hover::before {
+      opacity: 1;
+    }
+
+    /* Soft pulse animation */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.35; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.04); }
+    }
+    .ambient-glow {
+      animation: pulseGlow 8s ease-in-out infinite;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b120e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #25392d;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #395745;
+    }
+  </style>
+</head>
+<body class="hero-light-ground min-h-screen text-slate-100 relative selection:bg-emerald-600 selection:text-white">
+
+  <!-- Interactive Background Canvas (Ambient floating spore/pollen particles & subtle light) -->
+  <canvas id="pollen-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-60"></canvas>
+
+  <!-- Ambient Light Orbs -->
+  <div class="fixed top-1/3 left-1/4 w-96 h-96 bg-emerald-900/20 rounded-full blur-3xl pointer-events-none ambient-glow z-0"></div>
+  <div class="fixed bottom-10 right-1/4 w-[32rem] h-[32rem] bg-[#89a87d]/10 rounded-full blur-[100px] pointer-events-none z-0"></div>
+
+  <!-- Vertical Column Reference Grid Lines -->
+  <div class="max-w-7xl mx-auto fixed inset-0 pointer-events-none z-0 px-6">
+    <div class="vertical-guide left-[18%]"></div>
+    <div class="vertical-guide left-[50%]"></div>
+    <div class="vertical-guide left-[82%]"></div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- TOP FLOATING NAVIGATION DOCK -->
+  <!-- ========================================================================= -->
+  <header class="fixed top-6 inset-x-0 z-50 flex justify-center px-4">
+    <nav class="glass-dock flex items-center gap-1.5 p-1.5 rounded-2xl shadow-2xl max-w-fit" aria-label="Main Navigation">
+      
+      <!-- Brand Icon Pill -->
+      <button onclick="navigateTo('grove')" class="h-10 w-10 flex items-center justify-center rounded-xl bg-ivory text-moss-900 hover:bg-white transition-all shadow-md group" title="Sylva — Home">
+        <svg class="w-5 h-5 transition-transform group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C8.5 2 5.8 4.2 4.6 7.3C3.2 8.3 2 10.2 2 12.5C2 15.5 4.5 18 7.5 18H16.5C19.5 18 22 15.5 22 12.5C22 10.2 20.8 8.3 19.4 7.3C18.2 4.2 15.5 2 12 2Z"/>
+          <path d="M10.5 18H13.5V22H10.5V18Z"/>
+        </svg>
+      </button>
+
+      <!-- GROVE Pill -->
+      <button id="nav-grove" onclick="navigateTo('grove')" class="dock-pill active flex items-center gap-2 px-4 py-2 rounded-xl text-xs tracking-wider uppercase font-medium text-slate-300">
+        <svg class="w-3.5 h-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22v-9"/><path d="M12 13a5 5 0 0 1 5-5c.3 3.5-2.2 6.5-5 5Z"/><path d="M12 15a5 5 0 0 0-5-5c-.3 3.5 2.2 6.5 5 5Z"/>
+        </svg>
+        <span>Grove</span>
+      </button>
+
+      <!-- HABITATS Pill -->
+      <button id="nav-habitats" onclick="navigateTo('habitats')" class="dock-pill flex items-center gap-2 px-4 py-2 rounded-xl text-xs tracking-wider uppercase font-medium text-slate-300">
+        <svg class="w-3.5 h-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m8 3 4 8 5-5 5 15H2L8 3z"/>
+        </svg>
+        <span>Habitats</span>
+      </button>
+
+      <!-- JOURNAL Pill -->
+      <button id="nav-journal" onclick="navigateTo('journal')" class="dock-pill flex items-center gap-2 px-4 py-2 rounded-xl text-xs tracking-wider uppercase font-medium text-slate-300">
+        <svg class="w-3.5 h-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/>
+        </svg>
+        <span>Journal</span>
+      </button>
+
+      <!-- ENTER Pill -->
+      <button id="nav-enter" onclick="openEnterModal()" class="dock-pill flex items-center gap-2 px-4 py-2 rounded-xl text-xs tracking-wider uppercase font-medium text-slate-300 hover:text-emerald-300">
+        <svg class="w-3.5 h-3.5 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+        </svg>
+        <span>Enter</span>
+      </button>
+
+      <!-- Audio Ambient Toggle Button -->
+      <button id="audio-toggle-btn" onclick="toggleForestAmbience()" class="h-9 w-9 ml-1 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-all border border-white/5" title="Toggle Forest Rain & Canopy Soundscape">
+        <svg id="audio-icon-off" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-path="url(#mute)" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+        </svg>
+        <svg id="audio-icon-on" class="w-4 h-4 hidden text-emerald-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+        </svg>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN CONTENT CONTAINER -->
+  <!-- ========================================================================= -->
+  <main class="relative z-10 min-h-screen pt-28 pb-16 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto flex flex-col justify-between">
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!-- VIEW 1: GROVE (HOME) -->
+    <!-- ----------------------------------------------------------------------- -->
+    <div id="view-grove" class="view-page active-view w-full">
+      
+      <!-- Ghost Background Wordmark -->
+      <div class="absolute -bottom-10 -left-6 text-[14vw] font-light tracking-[0.2em] text-white/[0.025] select-none pointer-events-none font-sans leading-none">
+        SYLVA
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[calc(100vh-14rem)]">
+        
+        <!-- Left Side: Hero Typography & Actions -->
+        <div class="lg:col-span-7 flex flex-col justify-center space-y-7 z-10">
+          
+          <!-- Status Pill -->
+          <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-moss-700/40 border border-white/10 w-fit backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="text-[11px] font-medium tracking-wider text-emerald-200 uppercase">Sanctuary Live Telemetry · Sector 04</span>
+          </div>
+
+          <!-- Main Headline -->
+          <h1 class="text-5xl sm:text-6xl md:text-7xl font-light text-white tracking-tight leading-[1.08]">
+            Step into<br />
+            <span class="font-normal text-white">the living world</span>
+          </h1>
+
+          <!-- Description / Lede text -->
+          <p class="text-base sm:text-lg text-slate-300/85 font-light max-w-xl leading-relaxed">
+            We restore wild places through patient design, native planting, and a deeper kind of stewardship.
+          </p>
+
+          <!-- Interactive Action Buttons -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <!-- Explore the work button -->
+            <button onclick="navigateTo('habitats')" class="liquid-btn flex items-center gap-3 px-6 py-3.5 rounded-full text-white font-medium text-sm">
+              <svg class="w-4 h-4 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="14" y2="18"/>
+              </svg>
+              <span>Explore the work</span>
+            </button>
+
+            <!-- Play Film Button -->
+            <button onclick="openVideoModal()" class="flex items-center gap-3 px-5 py-3.5 rounded-full glass-card hover:bg-white/10 text-slate-200 text-sm font-medium transition-all group">
+              <span class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <svg class="w-3.5 h-3.5 fill-current ml-0.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </span>
+              <span>Watch Field Film</span>
+            </button>
+          </div>
+
+          <!-- Quick Micro Indicators -->
+          <div class="pt-6 border-t border-white/5 flex flex-wrap gap-8 text-xs text-slate-400">
+            <div>
+              <span class="block text-slate-500 uppercase tracking-wider text-[10px]">Current Microclimate</span>
+              <span class="text-slate-200 font-medium text-sm">17.4°C · 86% RH</span>
+            </div>
+            <div>
+              <span class="block text-slate-500 uppercase tracking-wider text-[10px]">Precipitation Cycle</span>
+              <span class="text-emerald-400 font-medium text-sm">Post-Storm Revitalization</span>
+            </div>
+            <div>
+              <span class="block text-slate-500 uppercase tracking-wider text-[10px]">Primary Flora</span>
+              <span class="text-slate-200 font-medium text-sm">Feather Moss & Western Hemlock</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Interactive Preview Cards -->
+        <div class="lg:col-span-5 flex flex-col space-y-6 relative">
+          
+          <!-- Card 1: Our Ethos -->
+          <article onclick="openEthosModal()" class="glass-card-light rounded-[2.2rem] p-6 shadow-2xl relative overflow-hidden transition-all duration-300 hover:scale-[1.02] cursor-pointer group">
+            <div class="rounded-2xl overflow-hidden h-36 relative mb-4 bg-moss-900 shadow-inner">
+              <img src="/landing-pages/inner-green-assets/card-ethos.jpg" alt="Lichen crusted stones covered with moss" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1511497584788-87676104235f?q=80&w=800&auto=format&fit=crop'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+              <span class="absolute bottom-2.5 left-3 text-[10px] tracking-wider font-semibold uppercase px-2 py-0.5 rounded bg-black/50 text-white backdrop-blur-sm">Preservation Vault</span>
+            </div>
+            <div class="pr-12">
+              <span class="text-xs uppercase font-medium tracking-wider text-slate-500">Our Ethos</span>
+              <h2 class="text-2xl font-normal text-slate-900 tracking-tight mt-1 leading-snug">Let the wild lead.</h2>
+              <p class="text-xs text-slate-600 mt-2 line-clamp-2">Re-establishing primeval growth equilibrium without human imposition or commercial harvesting.</p>
+            </div>
+            <!-- Interactive Round Knob Button -->
+            <button class="absolute bottom-5 right-5 w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center text-moss-800 hover:bg-moss-50 hover:scale-110 transition-all border border-slate-200/60" title="Read Ethos Document">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 21v-7"/><path d="M12 14c0-3.3 2.4-6 5.5-6 .3 3.6-2.2 6.4-5.5 6Z"/><path d="M12 16c-.1-2.9-2.2-5.2-4.9-5.2C6.8 13.7 9 16 12 16Z"/>
+              </svg>
+            </button>
+          </article>
+
+          <!-- Card 2: Field Note 07: After the Rain (Direct trigger to Article View) -->
+          <article onclick="navigateTo('article-rain')" class="glass-card-light rounded-[2.2rem] p-6 shadow-2xl relative overflow-hidden transition-all duration-300 hover:scale-[1.02] cursor-pointer group border-2 border-emerald-500/20 hover:border-emerald-500/60">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span class="text-xs uppercase font-medium tracking-wider text-slate-500">Field Note 07</span>
+              </div>
+              <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">New Dispatch</span>
+            </div>
+            
+            <h2 class="text-2xl font-normal text-slate-900 tracking-tight leading-snug mb-3">After the Rain</h2>
+            
+            <div class="rounded-2xl overflow-hidden h-44 relative bg-moss-900 shadow-inner group">
+              <img src="/landing-pages/inner-green-assets/card-ecostove.jpg" alt="Moss covered boulders in misty grove after rainfall" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=800&auto=format&fit=crop'" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+              
+              <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center text-white text-xs">
+                <span class="backdrop-blur-sm bg-black/40 px-2.5 py-1 rounded-md text-[11px]">Hydrological Cycle Study</span>
+                <span class="flex items-center gap-1 font-medium text-emerald-300">Read Dispatch &rarr;</span>
+              </div>
+            </div>
+
+            <!-- Knob -->
+            <button class="absolute top-6 right-6 w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center text-moss-800 hover:bg-moss-50 hover:scale-110 transition-all border border-slate-200/60" title="Open Field Note 07">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </button>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- Bottom Metrics Bar Matching Reference -->
+      <footer class="mt-16 pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-6">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <dt class="text-xs text-slate-400 font-light">Canopy restored</dt>
+            <dd class="text-xl font-semibold text-white">282 ha</dd>
+            <span class="text-[10px] text-emerald-400">+14% this quarter</span>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div>
+            <dt class="text-xs text-slate-400 font-light">Native species</dt>
+            <dd class="text-xl font-semibold text-white">43 mapped</dd>
+            <span class="text-[10px] text-emerald-400">8 keystone taxa</span>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+          <div>
+            <dt class="text-xs text-slate-400 font-light">Soil Saturation</dt>
+            <dd class="text-xl font-semibold text-white">84.2%</dd>
+            <span class="text-[10px] text-emerald-400">Optimal moss moisture</span>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div>
+            <dt class="text-xs text-slate-400 font-light">Ecological Index</dt>
+            <dd class="text-xl font-semibold text-white">98.4 / 100</dd>
+            <span class="text-[10px] text-emerald-400">Equilibrium restored</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!-- VIEW 2: HABITATS PAGE -->
+    <!-- ----------------------------------------------------------------------- -->
+    <div id="view-habitats" class="view-page w-full">
+      <div class="space-y-10">
+        
+        <!-- Header -->
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs uppercase tracking-wider mb-3">
+            Ecosystem Architecture
+          </div>
+          <h2 class="text-4xl sm:text-5xl font-light text-white tracking-tight">The Three Strata of Sylva</h2>
+          <p class="text-slate-300/80 font-light mt-3 text-base leading-relaxed">
+            Our temperate rainforest operates as a vertical biological tapestry. Energy, moisture, and organic matter cycle constantly between the towering hemlock crowns and subterranean mycelial circuits.
+          </p>
+        </div>
+
+        <!-- Filter tabs for layers -->
+        <div class="flex flex-wrap gap-2 border-b border-white/10 pb-4">
+          <button onclick="filterHabitat('all')" class="habitat-filter-btn active px-4 py-2 rounded-xl text-xs uppercase tracking-wider bg-white/10 text-white font-medium">All Strata</button>
+          <button onclick="filterHabitat('canopy')" class="habitat-filter-btn px-4 py-2 rounded-xl text-xs uppercase tracking-wider hover:bg-white/5 text-slate-400 hover:text-white font-medium">Upper Canopy</button>
+          <button onclick="filterHabitat('understory')" class="habitat-filter-btn px-4 py-2 rounded-xl text-xs uppercase tracking-wider hover:bg-white/5 text-slate-400 hover:text-white font-medium">Understory & Ferns</button>
+          <button onclick="filterHabitat('floor')" class="habitat-filter-btn px-4 py-2 rounded-xl text-xs uppercase tracking-wider hover:bg-white/5 text-slate-400 hover:text-white font-medium">Floor & Mycelium</button>
+        </div>
+
+        <!-- Habitat Layer Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Strata 1: Upper Canopy -->
+          <div class="habitat-card canopy glass-card rounded-3xl p-6 flex flex-col justify-between hover:border-emerald-500/40 transition-all group">
+            <div>
+              <div class="h-48 rounded-2xl overflow-hidden mb-5 relative bg-moss-900">
+                <img src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=800&auto=format&fit=crop" alt="Upper Forest Canopy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <span class="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-medium text-emerald-300 border border-white/10">Elevation: 28m – 55m</span>
+              </div>
+              <span class="text-xs text-emerald-400 font-semibold tracking-wider uppercase">Stratum I</span>
+              <h3 class="text-2xl font-light text-white mt-1">Upper Canopy</h3>
+              <p class="text-sm text-slate-300/80 font-light mt-3 leading-relaxed">
+                Home to ancient Douglas fir, western red cedar, and cloud-condensing lichens. This layer buffers torrential rains, dissipates wind velocities, and acts as the lungs of the sanctuary.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 space-y-2 text-xs text-slate-400">
+              <div class="flex justify-between"><span>Keystone Taxa:</span> <span class="text-white font-medium">Northern Spotted Owl, Flying Squirrel</span></div>
+              <div class="flex justify-between"><span>Solar Absorption:</span> <span class="text-emerald-400 font-medium">88% incident sunlight</span></div>
+              <div class="flex justify-between"><span>Micro-Territories:</span> <span class="text-white font-medium">18 cataloged</span></div>
+            </div>
+          </div>
+
+          <!-- Strata 2: Understory & Ferns -->
+          <div class="habitat-card understory glass-card rounded-3xl p-6 flex flex-col justify-between hover:border-emerald-500/40 transition-all group">
+            <div>
+              <div class="h-48 rounded-2xl overflow-hidden mb-5 relative bg-moss-900">
+                <img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=800&auto=format&fit=crop" alt="Understory Ferns and Moss" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <span class="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-medium text-emerald-300 border border-white/10">Elevation: 3m – 20m</span>
+              </div>
+              <span class="text-xs text-emerald-400 font-semibold tracking-wider uppercase">Stratum II</span>
+              <h3 class="text-2xl font-light text-white mt-1">Understory & Ferns</h3>
+              <p class="text-sm text-slate-300/80 font-light mt-3 leading-relaxed">
+                A dense, moisture-rich realm dominated by sword ferns, vine maples, and salal shrubs. Shaded foliage traps vapor, generating the signature microclimate that shields delicate fauna.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 space-y-2 text-xs text-slate-400">
+              <div class="flex justify-between"><span>Keystone Taxa:</span> <span class="text-white font-medium">Pacific Chorus Frog, Rufous Hummingbird</span></div>
+              <div class="flex justify-between"><span>Humidity Retention:</span> <span class="text-emerald-400 font-medium">92% year-round</span></div>
+              <div class="flex justify-between"><span>Fern Densities:</span> <span class="text-white font-medium">42 specimen/m²</span></div>
+            </div>
+          </div>
+
+          <!-- Strata 3: Forest Floor & Mycelium -->
+          <div class="habitat-card floor glass-card rounded-3xl p-6 flex flex-col justify-between hover:border-emerald-500/40 transition-all group">
+            <div>
+              <div class="h-48 rounded-2xl overflow-hidden mb-5 relative bg-moss-900">
+                <img src="/landing-pages/inner-green-assets/card-ethos.jpg" alt="Forest Floor and Moss" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1511497584788-87676104235f?q=80&w=800&auto=format&fit=crop'" />
+                <span class="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-medium text-emerald-300 border border-white/10">Elevation: Ground to -2m</span>
+              </div>
+              <span class="text-xs text-emerald-400 font-semibold tracking-wider uppercase">Stratum III</span>
+              <h3 class="text-2xl font-light text-white mt-1">Floor & Mycelium</h3>
+              <p class="text-sm text-slate-300/80 font-light mt-3 leading-relaxed">
+                The neurological hub of the woods. Millions of fungal hyphae weave through peat, distributing phosphorus, carbon, and hydraulic pulses between disconnected seedlings and centuries-old trunks.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 space-y-2 text-xs text-slate-400">
+              <div class="flex justify-between"><span>Keystone Taxa:</span> <span class="text-white font-medium">Ensatina Salamander, Cantharellus Fungi</span></div>
+              <div class="flex justify-between"><span>Carbon Sequestration:</span> <span class="text-emerald-400 font-medium">340 metric tons/ha</span></div>
+              <div class="flex justify-between"><span>Hyphal Network Span:</span> <span class="text-white font-medium">&gt; 1,200 km mapped</span></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!-- VIEW 3: JOURNAL PAGE -->
+    <!-- ----------------------------------------------------------------------- -->
+    <div id="view-journal" class="view-page w-full">
+      <div class="space-y-10">
+        
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
+          <div class="max-w-2xl">
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs uppercase tracking-wider mb-3">
+              Field Log Dispatches
+            </span>
+            <h2 class="text-4xl sm:text-5xl font-light text-white tracking-tight">The Forest Archives</h2>
+            <p class="text-slate-300/80 font-light mt-2 text-base">
+              Original botanical telemetry, acoustic surveys, and habitat diaries recorded live on site by Sylva stewards.
+            </p>
+          </div>
+          <div class="text-sm text-slate-400">
+            Archive Vol. IV · 18 Dispatches Logged
+          </div>
+        </div>
+
+        <!-- Featured Article Card (Field Note 07) -->
+        <article onclick="navigateTo('article-rain')" class="glass-card rounded-[2.5rem] p-6 sm:p-8 hover:border-emerald-500/50 transition-all cursor-pointer group relative overflow-hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-5 h-64 sm:h-72 rounded-2xl overflow-hidden relative bg-moss-900 shadow-md">
+              <img src="/landing-pages/inner-green-assets/card-ecostove.jpg" alt="After the Rain" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=800&auto=format&fit=crop'" />
+              <div class="absolute top-4 left-4 bg-emerald-950/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-emerald-300 border border-emerald-500/30">
+                ★ Featured Dispatch
+              </div>
+            </div>
+            
+            <div class="lg:col-span-7 space-y-4">
+              <div class="flex items-center gap-3 text-xs text-slate-400">
+                <span class="text-emerald-400 font-medium">FIELD NOTE 07</span>
+                <span>•</span>
+                <span>OCTOBER 6, 2026</span>
+                <span>•</span>
+                <span>6 MIN READ</span>
+              </div>
+              <h3 class="text-3xl sm:text-4xl font-light text-white group-hover:text-emerald-300 transition-colors">
+                After the Rain: The Sensory & Ecological Rebirth
+              </h3>
+              <p class="text-slate-300/80 font-light text-sm sm:text-base leading-relaxed">
+                An extensive chronicle of how rainfall unbinds petrichor geosmin, triggers immediate amphibian migration across saturated boulder carpets, and revives the hydraulic sap pressure in ancient redwoods.
+              </p>
+              <div class="pt-3 flex items-center gap-2 text-sm font-medium text-emerald-400 group-hover:translate-x-1 transition-transform">
+                <span>Read Full Comprehensive Field Study</span>
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Additional Journal Articles Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+          
+          <!-- Note 06 -->
+          <article class="glass-card rounded-3xl p-6 hover:border-white/20 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-3">
+                <span class="text-emerald-400 font-medium">FIELD NOTE 06</span>
+                <span>4 MIN READ</span>
+              </div>
+              <h4 class="text-xl font-normal text-white">Mycelial Whispers across the Ridge</h4>
+              <p class="text-xs text-slate-300/70 font-light mt-2.5 leading-relaxed">
+                Measuring microvolt electrical pulses along Armillaria rhizomorph networks during seasonal leaf senescence.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
+              <span class="text-slate-400">Dr. Aris Thorne</span>
+              <span class="text-emerald-400 font-medium cursor-pointer hover:underline" onclick="navigateTo('article-rain')">Preview &rarr;</span>
+            </div>
+          </article>
+
+          <!-- Note 05 -->
+          <article class="glass-card rounded-3xl p-6 hover:border-white/20 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-3">
+                <span class="text-emerald-400 font-medium">FIELD NOTE 05</span>
+                <span>5 MIN READ</span>
+              </div>
+              <h4 class="text-xl font-normal text-white">Twilight Songbirds of Old Growth</h4>
+              <p class="text-xs text-slate-300/70 font-light mt-2.5 leading-relaxed">
+                Acoustic spectrum analysis of Varied Thrush calls bouncing through dense condensation layers at 600m altitude.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
+              <span class="text-slate-400">Sarah Lin, Bio-Acoustics</span>
+              <span class="text-emerald-400 font-medium cursor-pointer hover:underline" onclick="navigateTo('article-rain')">Preview &rarr;</span>
+            </div>
+          </article>
+
+          <!-- Note 04 -->
+          <article class="glass-card rounded-3xl p-6 hover:border-white/20 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-3">
+                <span class="text-emerald-400 font-medium">FIELD NOTE 04</span>
+                <span>7 MIN READ</span>
+              </div>
+              <h4 class="text-xl font-normal text-white">Spore Dynamics & Thermal Plumes</h4>
+              <p class="text-xs text-slate-300/70 font-light mt-2.5 leading-relaxed">
+                High-speed micro-imaging revealing explosive spore discharge in Polypodium ferns during dawn humidity inversions.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
+              <span class="text-slate-400">K. O'Connor</span>
+              <span class="text-emerald-400 font-medium cursor-pointer hover:underline" onclick="navigateTo('article-rain')">Preview &rarr;</span>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!-- VIEW 4: DEDICATED ARTICLE PAGE ("Field Note 07: After the Rain") -->
+    <!-- ----------------------------------------------------------------------- -->
+    <div id="view-article-rain" class="view-page w-full">
+      <article class="max-w-4xl mx-auto space-y-12">
+        
+        <!-- Back Navigation Button -->
+        <div>
+          <button onclick="navigateTo('grove')" class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-card hover:bg-white/10 text-slate-300 text-xs font-medium uppercase tracking-wider transition-all group">
+            <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span>Return to Grove Overview</span>
+          </button>
+        </div>
+
+        <!-- Article Hero Header -->
+        <header class="space-y-6">
+          <div class="flex flex-wrap items-center gap-3 text-xs text-emerald-400 font-medium tracking-wider uppercase">
+            <span>Dispatched from Southern Ridge</span>
+            <span>•</span>
+            <span>Precipitation: 44.8 mm</span>
+            <span>•</span>
+            <span>Field Note 07</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-6xl font-light text-white tracking-tight leading-[1.12]">
+            After the Rain: The Sensory & Ecological Rebirth
+          </h1>
+
+          <p class="text-xl text-slate-300 font-light leading-relaxed">
+            When torrential cloudbursts yield to sunlit mist, the temperate forest undergoes an instantaneous physical, chemical, and behavioral transformation.
+          </p>
+
+          <div class="flex items-center gap-4 pt-4 border-t border-white/10 text-xs text-slate-400">
+            <div class="w-10 h-10 rounded-full bg-emerald-800/50 flex items-center justify-center text-emerald-200 font-semibold border border-white/10">
+              EV
+            </div>
+            <div>
+              <span class="text-white font-medium block">Dr. Elena Vance</span>
+              <span>Lead Botanical Ecologist, Sylva Research Station</span>
+            </div>
+            <div class="ml-auto flex items-center gap-3">
+              <button onclick="window.print()" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 text-xs transition-colors">Print Note</button>
+              <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied to clipboard!');" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 text-xs transition-colors">Share</button>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Featured Photograph -->
+        <figure class="rounded-[2.5rem] overflow-hidden glass-card p-3 shadow-2xl relative">
+          <div class="h-96 sm:h-[32rem] rounded-[2rem] overflow-hidden relative bg-moss-900">
+            <img src="/landing-pages/inner-green-assets/card-ecostove.jpg" alt="Moss covered boulders after rain in Sylva Grove" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1200&auto=format&fit=crop'" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+            <figcaption class="absolute bottom-4 left-6 right-6 text-xs text-slate-200 backdrop-blur-md bg-black/40 px-4 py-2.5 rounded-xl border border-white/10 flex justify-between">
+              <span>Plate 07-A: Glacial erratic boulders draped in Dicranum moss, 42 minutes post-precipitation.</span>
+              <span class="text-emerald-300 font-mono">Lat 47.882° N, Long 123.671° W</span>
+            </figcaption>
+          </div>
+        </figure>
+
+        <!-- Long-form Article Body Sections -->
+        <div class="prose prose-invert max-w-none text-slate-200 text-base sm:text-lg font-light leading-relaxed space-y-8">
+          
+          <!-- SECTION 1 -->
+          <section class="space-y-4">
+            <h2 class="text-2xl sm:text-3xl font-light text-white tracking-tight border-b border-white/10 pb-3 flex items-center gap-3">
+              <span class="text-emerald-400 text-lg font-mono">01.</span>
+              Atmospheric Metamorphosis & the Chemistry of Petrichor
+            </h2>
+            <p>
+              The moment the storm breaks, the forest air is instantly purged of suspended particulate matter. However, the most profound shift is olfactory. The unmistakable fragrance that permeates every canyon—<strong>petrichor</strong>—is not simply the smell of water on dust, but a rapid biological aerosolization.
+            </p>
+            <p>
+              As raindrops strike dry soil and porous moss mats at terminal velocity, they trap microscopic air bubbles against the terrain. As these bubbles burst upward, they launch fine aerosolized droplets containing <em>geosmin</em>, an organic compound synthesized by soil-dwelling <em>Actinomyces</em> bacteria. Simulataneously, fatty acids and aromatic terpenes stored within conifers stomata are unleashed into the lower vapor strata.
+            </p>
+            
+            <!-- Pull Quote Glass Callout -->
+            <blockquote class="my-6 p-6 rounded-2xl glass-card border-l-4 border-l-emerald-400 not-italic text-lg font-normal text-slate-100 shadow-xl">
+              "To walk through Sylva forty minutes after a downpour is to inhale the chemistry of rebirth. The temperature drops by 4.2°C in minutes, while ambient ozone levels spike, creating an air density that feels physically nourishing."
+            </blockquote>
+          </section>
+
+          <!-- SECTION 2 -->
+          <section class="space-y-4">
+            <h2 class="text-2xl sm:text-3xl font-light text-white tracking-tight border-b border-white/10 pb-3 flex items-center gap-3">
+              <span class="text-emerald-400 text-lg font-mono">02.</span>
+              Faunal Migration & Canopy Shelter Resumption
+            </h2>
+            <p>
+              Rainfall acts as a master biological synchronizer. For forest wildlife, the cessation of heavy rain triggers an immediate cascade of territorial, feeding, and migratory movements:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+              <div class="p-5 rounded-2xl glass-card">
+                <h3 class="text-emerald-300 text-base font-semibold mb-2">Amphibians: The Great Moss Traversal</h3>
+                <p class="text-xs text-slate-300 leading-relaxed font-light">
+                  Plethodontid salamanders lack lungs and breathe entirely through moist skin. During dry spells, they remain buried beneath rotting cedar logs. Minutes after rainfall, hundreds emerge directly onto saturated granite rocks to forage for springtails.
+                </p>
+              </div>
+
+              <div class="p-5 rounded-2xl glass-card">
+                <h3 class="text-emerald-300 text-base font-semibold mb-2">Avian Resumption of Acoustic Signals</h3>
+                <p class="text-xs text-slate-300 leading-relaxed font-light">
+                  Heavy rain masks acoustic frequencies. Song thrushes and Pacific wrens, having taken shelter within dense hemlock whorls, resume territorial calls with heightened intensity as sound travels further through saturated air.
+                </p>
+              </div>
+
+              <div class="p-5 rounded-2xl glass-card">
+                <h3 class="text-emerald-300 text-base font-semibold mb-2">Insect Micro-Architecture Defense</h3>
+                <p class="text-xs text-slate-300 leading-relaxed font-light">
+                  For tiny insects, an 8mg raindrop has the impact of an incoming boulder. Wolf spiders and caddisfly larvae anchor beneath broadleaf ferns, emerging immediately to harvest organic detritus floating in ephemeral rills.
+                </p>
+              </div>
+
+              <div class="p-5 rounded-2xl glass-card">
+                <h3 class="text-emerald-300 text-base font-semibold mb-2">Mammalian Olfactory Navigation</h3>
+                <p class="text-xs text-slate-300 leading-relaxed font-light">
+                  Damp soil amplifies scent molecules by 400%. Roosevelt elk and black-tailed deer navigate fresh grazing corridors, tracing moisture-boosted botanical trails along the creek terraces.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION 3 -->
+          <section class="space-y-4">
+            <h2 class="text-2xl sm:text-3xl font-light text-white tracking-tight border-b border-white/10 pb-3 flex items-center gap-3">
+              <span class="text-emerald-400 text-lg font-mono">03.</span>
+              The Hydraulic Sponge: Moss Beds and Stream Revitalization
+            </h2>
+            <p>
+              The most miraculous actor in this post-rain landscape is the bryophyte mantle. The carpet of <em>Sphagnum</em> and feather mosses covering the boulders in our photographs holds up to <strong>26 times its dry weight in water</strong>. 
+            </p>
+            <p>
+              Rather than allowing torrents to wash topsoil into downstream rivers, the moss network functions as a giant natural reservoir. It meters rainfall slowly into the subsoil over forty-eight hours, filtering sediment and delivering clean, oxygen-saturated water to the spawning grounds of native cutthroat trout.
+            </p>
+          </section>
+
+        </div>
+
+        <!-- Telemetry Summary Card -->
+        <div class="p-6 sm:p-8 rounded-3xl glass-card border border-emerald-500/20 bg-emerald-950/20">
+          <h3 class="text-lg font-medium text-white mb-4">Post-Precipitation Telemetry Summary</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+            <div class="p-3 rounded-xl bg-white/5">
+              <span class="text-slate-400 block">Rain Accumulated</span>
+              <span class="text-lg font-semibold text-white">44.8 mm</span>
+            </div>
+            <div class="p-3 rounded-xl bg-white/5">
+              <span class="text-slate-400 block">Relative Humidity</span>
+              <span class="text-lg font-semibold text-emerald-300">96.4%</span>
+            </div>
+            <div class="p-3 rounded-xl bg-white/5">
+              <span class="text-slate-400 block">Soil Moisture Index</span>
+              <span class="text-lg font-semibold text-white">+38.2%</span>
+            </div>
+            <div class="p-3 rounded-xl bg-white/5">
+              <span class="text-slate-400 block">Stream Clarity</span>
+              <span class="text-lg font-semibold text-emerald-300">0.12 NTU (Pristine)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Navigation from Article -->
+        <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <button onclick="navigateTo('journal')" class="text-sm text-slate-400 hover:text-white flex items-center gap-2">
+            &larr; Return to All Journal Notes
+          </button>
+          <button onclick="navigateTo('grove')" class="px-6 py-2.5 rounded-full bg-ivory text-moss-900 font-medium text-sm hover:bg-white transition-all shadow-lg">
+            Back to Sanctuary Home
+          </button>
+        </div>
+
+      </article>
+    </div>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- MODALS & OVERLAYS -->
+  <!-- ========================================================================= -->
+
+  <!-- 1. ENTER / SOUNDSCAPE MODAL -->
+  <div id="modal-enter" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-xl flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="glass-card max-w-lg w-full rounded-[2.5rem] p-8 border border-white/20 shadow-2xl space-y-6 relative">
+      <button onclick="closeEnterModal()" class="absolute top-6 right-6 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-slate-300 hover:bg-white/20 hover:text-white transition-all">
+        &times;
+      </button>
+
+      <div class="space-y-2">
+        <span class="text-xs uppercase tracking-wider text-emerald-400 font-medium">Gateway Protocol</span>
+        <h3 class="text-3xl font-light text-white">Enter Sylva Sanctuary</h3>
+        <p class="text-sm text-slate-300/80 font-light">
+          Step deeper into our regenerative research station. Access live audio feeds, sensor nodes, and field visitor stewardship logs.
+        </p>
+      </div>
+
+      <!-- Feature Toggles inside Modal -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/10">
+          <div>
+            <h4 class="text-sm font-medium text-white">Audio Immersion (Synthesized Rain & Wind)</h4>
+            <p class="text-xs text-slate-400">Procedural ambient petrichor generator via Web Audio API</p>
+          </div>
+          <button onclick="toggleForestAmbience()" class="px-4 py-2 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 text-xs font-semibold uppercase tracking-wider transition-all">
+            Toggle Audio
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/10">
+          <div>
+            <h4 class="text-sm font-medium text-white">Explore 3D World (Original Three.js Scene)</h4>
+            <p class="text-xs text-slate-400">View the procedural moss root terrain & liquid metal controls</p>
+          </div>
+          <a href="/landing-pages/inner-green-3d.html" target="_blank" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold uppercase tracking-wider transition-all">
+            Launch 3D
+          </a>
+        </div>
+      </div>
+
+      <!-- Visitor Sign-in Simulation -->
+      <form onsubmit="event.preventDefault(); alert('Stewardship session registered for Sector 04!'); closeEnterModal();" class="space-y-3 pt-2">
+        <label class="block text-xs text-slate-400">Visitor Call-sign / Conservation Pass:</label>
+        <div class="flex gap-2">
+          <input type="text" placeholder="e.g. Ranger_Vance_04" required class="flex-1 bg-black/40 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400" />
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-ivory text-moss-900 font-medium text-sm hover:bg-white transition-all shadow-md">
+            Connect
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. OUR ETHOS MODAL -->
+  <div id="modal-ethos" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-xl flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="glass-card max-w-xl w-full rounded-[2.5rem] p-8 border border-white/20 shadow-2xl space-y-6 relative">
+      <button onclick="closeEthosModal()" class="absolute top-6 right-6 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-slate-300 hover:bg-white/20 hover:text-white transition-all">
+        &times;
+      </button>
+
+      <div class="space-y-3">
+        <span class="text-xs uppercase tracking-wider text-emerald-400 font-medium">Foundational Charter</span>
+        <h3 class="text-3xl font-light text-white">Let the Wild Lead</h3>
+        <p class="text-base text-slate-300/90 font-light leading-relaxed">
+          Traditional forestry seeks to extract; typical conservation often attempts to freeze a landscape in a fragile museum state.
+        </p>
+        <p class="text-sm text-slate-300/80 font-light leading-relaxed">
+          At Sylva, we believe in patient catalytic intervention. We re-introduce nurse logs, repair natural hydrological flows, and step back. The forest knows how to heal itself when given the quietude to listen.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/20 text-xs text-emerald-300 space-y-1">
+        <span class="font-semibold block">Three Tenets of Sylva Stewardship:</span>
+        <ul class="list-disc list-inside space-y-0.5 text-slate-300">
+          <li>Never fell a nurse tree that is fostering second-generation saplings.</li>
+          <li>Measure forest vitality by mycorrhizal breadth, not harvestable board-feet.</li>
+          <li>Design spaces where human footsteps leave no permanent scar.</li>
+        </ul>
+      </div>
+
+      <div class="text-right">
+        <button onclick="closeEthosModal()" class="px-6 py-2.5 rounded-full bg-ivory text-moss-900 font-medium text-sm hover:bg-white transition-all">
+          Close Charter
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. WATCH FILM MODAL -->
+  <div id="modal-video" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-xl flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="glass-card max-w-2xl w-full rounded-[2.5rem] p-6 border border-white/20 shadow-2xl space-y-4 relative">
+      <button onclick="closeVideoModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-slate-300 hover:bg-white/20 hover:text-white transition-all z-10">
+        &times;
+      </button>
+
+      <h3 class="text-xl font-light text-white">Field Film: Into the Living World</h3>
+      <div class="h-80 rounded-2xl overflow-hidden relative bg-black flex items-center justify-center border border-white/10">
+        <img src="/landing-pages/inner-green-assets/card-ecostove.jpg" alt="Video preview" class="w-full h-full object-cover opacity-60" />
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-black/40">
+          <div class="w-16 h-16 rounded-full bg-emerald-500/90 text-white flex items-center justify-center shadow-2xl mb-3 animate-pulse cursor-pointer" onclick="alert('Playing 4K binaural documentary feed...')">
+            <svg class="w-7 h-7 fill-current ml-1" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <span class="text-sm font-medium text-white">Temperate Canopy: 4K Binaural Experience</span>
+          <span class="text-xs text-slate-400 mt-1">Recorded in Olympic Rainforest, WA · 12 min runtime</span>
+        </div>
+      </div>
+      <div class="flex justify-between items-center text-xs text-slate-400 pt-2">
+        <span>Soundtrack: Ambient Rain & Varied Thrush</span>
+        <button onclick="closeVideoModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- VANILLA JAVASCRIPT LOGIC -->
+  <!-- ========================================================================= -->
+  <script>
+    // -------------------------------------------------------------------------
+    // 1. View Routing System (SPA)
+    // -------------------------------------------------------------------------
+    const views = {
+      'grove': document.getElementById('view-grove'),
+      'habitats': document.getElementById('view-habitats'),
+      'journal': document.getElementById('view-journal'),
+      'article-rain': document.getElementById('view-article-rain')
+    };
+
+    const navButtons = {
+      'grove': document.getElementById('nav-grove'),
+      'habitats': document.getElementById('nav-habitats'),
+      'journal': document.getElementById('nav-journal')
+    };
+
+    function navigateTo(targetView) {
+      if (!views[targetView]) targetView = 'grove';
+
+      // Modern View Transition API fallback
+      const performSwitch = () => {
+        // Hide all views
+        Object.keys(views).forEach(key => {
+          views[key].classList.remove('active-view');
+        });
+
+        // Show target view
+        views[targetView].classList.add('active-view');
+
+        // Update nav active pill
+        Object.keys(navButtons).forEach(key => {
+          if (navButtons[key]) {
+            if (key === targetView) {
+              navButtons[key].classList.add('active');
+            } else {
+              navButtons[key].classList.remove('active');
+            }
+          }
+        });
+
+        // Special handling for article view: highlight Journal pill
+        if (targetView === 'article-rain' && navButtons['journal']) {
+          navButtons['journal'].classList.add('active');
+        }
+
+        // Scroll smoothly to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Update URL hash without reload
+        if (window.location.hash !== `#${targetView}`) {
+          history.pushState(null, '', `#${targetView}`);
+        }
+      };
+
+      if (document.startViewTransition) {
+        document.startViewTransition(performSwitch);
+      } else {
+        performSwitch();
+      }
+    }
+
+    // Handle back/forward browser navigation
+    window.addEventListener('popstate', () => {
+      const hash = window.location.hash.replace('#', '') || 'grove';
+      navigateTo(hash);
+    });
+
+    // -------------------------------------------------------------------------
+    // 2. Modals Management
+    // -------------------------------------------------------------------------
+    function openEnterModal() {
+      const m = document.getElementById('modal-enter');
+      m.classList.remove('opacity-0', 'pointer-events-none');
+    }
+    function closeEnterModal() {
+      const m = document.getElementById('modal-enter');
+      m.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function openEthosModal() {
+      const m = document.getElementById('modal-ethos');
+      m.classList.remove('opacity-0', 'pointer-events-none');
+    }
+    function closeEthosModal() {
+      const m = document.getElementById('modal-ethos');
+      m.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function openVideoModal() {
+      const m = document.getElementById('modal-video');
+      m.classList.remove('opacity-0', 'pointer-events-none');
+    }
+    function closeVideoModal() {
+      const m = document.getElementById('modal-video');
+      m.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    // Dismiss modals when clicking backdrop
+    window.addEventListener('click', (e) => {
+      ['modal-enter', 'modal-ethos', 'modal-video'].forEach(id => {
+        const m = document.getElementById(id);
+        if (e.target === m) {
+          m.classList.add('opacity-0', 'pointer-events-none');
+        }
+      });
+    });
+
+    // -------------------------------------------------------------------------
+    // 3. Habitats Filter Tabs
+    // -------------------------------------------------------------------------
+    function filterHabitat(type) {
+      document.querySelectorAll('.habitat-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-white/10', 'text-white', 'active');
+        btn.classList.add('text-slate-400');
+      });
+      event.target.classList.add('bg-white/10', 'text-white', 'active');
+      event.target.classList.remove('text-slate-400');
+
+      const cards = document.querySelectorAll('.habitat-card');
+      cards.forEach(card => {
+        if (type === 'all' || card.classList.contains(type)) {
+          card.style.display = 'flex';
+          card.style.opacity = '1';
+        } else {
+          card.style.display = 'none';
+          card.style.opacity = '0';
+        }
+      });
+    }
+
+    // -------------------------------------------------------------------------
+    // 4. Web Audio API Ambient Forest Sound Generator (Petrichor & Wind)
+    // -------------------------------------------------------------------------
+    let audioCtx = null;
+    let isAudioPlaying = false;
+    let rainGainNode = null;
+
+    function toggleForestAmbience() {
+      if (!isAudioPlaying) {
+        startRainAudio();
+      } else {
+        stopRainAudio();
+      }
+    }
+
+    function startRainAudio() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+
+        // White noise generator for soft rainfall
+        const bufferSize = audioCtx.sampleRate * 2;
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+        
+        // Pink noise filter approximation for natural rain sound
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          b0 = 0.99886 * b0 + white * 0.0555179;
+          b1 = 0.99332 * b1 + white * 0.0750759;
+          b2 = 0.96900 * b2 + white * 0.1538520;
+          b3 = 0.86650 * b3 + white * 0.3104856;
+          b4 = 0.55000 * b4 + white * 0.5329522;
+          b5 = -0.7616 * b5 - white * 0.0168980;
+          output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.04;
+          b6 = white * 0.115926;
+        }
+
+        const whiteNoise = audioCtx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+        whiteNoise.loop = true;
+
+        // Lowpass filter for muffled foliage canopy sound
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 850;
+
+        // Master gain
+        rainGainNode = audioCtx.createGain();
+        rainGainNode.gain.setValueAtTime(0.01, audioCtx.currentTime);
+        rainGainNode.gain.exponentialRampToValueAtTime(0.2, audioCtx.currentTime + 2);
+
+        whiteNoise.connect(filter);
+        filter.connect(rainGainNode);
+        rainGainNode.connect(audioCtx.destination);
+        whiteNoise.start();
+
+        isAudioPlaying = true;
+        document.getElementById('audio-icon-off').classList.add('hidden');
+        document.getElementById('audio-icon-on').classList.remove('hidden');
+      } catch (err) {
+        console.warn('Web Audio not allowed without interaction:', err);
+      }
+    }
+
+    function stopRainAudio() {
+      if (rainGainNode && audioCtx) {
+        rainGainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+        setTimeout(() => {
+          if (audioCtx) audioCtx.close();
+          isAudioPlaying = false;
+          document.getElementById('audio-icon-off').classList.remove('hidden');
+          document.getElementById('audio-icon-on').classList.add('hidden');
+        }, 500);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 5. Ambient Pollen Particle Canvas Animation
+    // -------------------------------------------------------------------------
+    const canvas = document.getElementById('pollen-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    let mouse = { x: null, y: null };
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.radius = Math.random() * 1.8 + 0.6;
+        this.baseX = this.x;
+        this.baseY = this.y;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = -Math.random() * 0.35 - 0.1;
+        this.alpha = Math.random() * 0.5 + 0.2;
+        this.hue = Math.random() * 40 + 90; // soft golden-green hues
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Subtle mouse displacement
+        if (mouse.x !== null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            const force = (120 - dist) / 120;
+            this.x -= (dx / dist) * force * 1.5;
+            this.y -= (dy / dist) * force * 1.5;
+          }
+        }
+
+        if (this.y < -10) this.y = height + 10;
+        if (this.x < -10) this.x = width + 10;
+        if (this.x > width + 10) this.x = -10;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${this.hue}, 60%, 75%, ${this.alpha})`;
+        ctx.shadowBlur = 6;
+        ctx.shadowColor = `hsla(${this.hue}, 80%, 70%, ${this.alpha * 0.8})`;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    for (let i = 0; i < 48; i++) {
+      particles.push(new Particle());
+    }
+
+    function animatePollen() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animatePollen);
+    }
+    animatePollen();
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+    window.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    // -------------------------------------------------------------------------
+    // 6. Initial Route Check from URL hash
+    // -------------------------------------------------------------------------
+    window.addEventListener('DOMContentLoaded', () => {
+      const initialHash = window.location.hash.replace('#', '');
+      if (initialHash && views[initialHash]) {
+        navigateTo(initialHash);
+      } else {
+        navigateTo('grove');
+      }
+    });
+  </script>
+
+</body>
+</html>
